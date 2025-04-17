@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Search Results for "{{ query }}"</h2>
+
+{% if results %}
+<div class="row">
+    {% for person in results %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', filename='uploads/' + person.image) if person.image else url_for('static', filename='default.png') }}"
+                    class="img-fluid rounded-start h-100"
+                    alt="{{ person.name }}"
+                    style="object-fit: cover;">
+               
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ person.name }}</h5>
+                        <p class="card-text">
+                            <strong>Age:</strong> {{ person.age }}<br>
+                            <strong>Missing Since:</strong>
+                            {% if person.date_missing %}
+                              {{ person.date_missing.strftime('%b %d, %Y') }}
+                            {% else %}
+                              Unknown
+                            {% endif %}
+                            <br>
+                            
+                            <strong>Last Seen:</strong> {{ person.last_seen }}
+                        </p>
+                        <a href="{{ url_for('person_detail', id=person.id) }}" class="btn btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    No results found for "{{ query }}"
+</div>
+{% endif %}
+{% endblock %}

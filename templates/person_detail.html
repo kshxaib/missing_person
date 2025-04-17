@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ person.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto py-10 px-4">
+    <div class="flex flex-col md:flex-row gap-10 items-start">
+        
+        <!-- Left Side: Image -->
+        <div class="flex-shrink-0 w-full md:w-1/3">
+            {% if person.image %}
+                <img src="{{ url_for('static', filename='uploads/' + person.image) }}" alt="{{ person.name }}"
+                     class="rounded-xl shadow-lg w-full object-cover">
+            {% else %}
+                <img src="{{ url_for('static', filename='default.jpg') }}" alt="No image available"
+                     class="rounded-xl shadow-lg w-full object-cover">
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Details -->
+        <div class="w-full md:w-2/3 space-y-6">
+
+            <!-- Name and Date -->
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ person.name }}</h1>
+                <p class="text-gray-600 mt-1">
+                    Missing from 
+                    {% if person.date_missing %}
+                        {{ person.date_missing.strftime('%B %d, %Y') }}
+                    {% else %}
+                        Unknown date
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="bg-white shadow-lg rounded-xl p-6">
+                <h3 class="text-xl font-semibold mb-4">Quick Info</h3>
+                <ul class="space-y-2 text-gray-700">
+                    <li><strong>Name:</strong> {{ person.name }}</li>
+                    <li><strong>Age:</strong> {{ person.age }}</li>
+                    <li><strong>Status:</strong> 
+                        <span class="inline-block px-2 py-1 text-sm font-medium rounded-full
+                            {% if person.status == 'Found' %}
+                                bg-green-100 text-green-800
+                            {% else %}
+                                bg-red-100 text-red-800
+                            {% endif %}
+                        ">
+                            {{ person.status }}
+                        </span>
+                    </li>
+                    <li><strong>Missing Since:</strong>
+                        {% if person.date_missing %}
+                            {{ person.date_missing.strftime('%B %d, %Y') }}
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-white shadow-md rounded-xl">
+                <div class="bg-blue-600 text-white text-lg font-semibold px-4 py-2 rounded-t-xl">
+                    Description
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-800">{{ person.description }}</p>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="bg-white shadow-md rounded-xl">
+                <div class="bg-blue-600 text-white text-lg font-semibold px-4 py-2 rounded-t-xl">
+                    Contact Information
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-800">If you have any information about <strong>{{ person.name }}</strong>, please contact:</p>
+                    <p class="text-blue-700 text-lg font-semibold mt-2">{{ person.reporter_contact }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

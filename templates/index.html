@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero-section mb-5">
+    <div class="p-5 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Help Find Missing Persons</h1>
+            <p class="col-md-8 fs-4">If you have any information about these individuals, please contact the authorities or use the provided contact details.</p>
+            <a href="{{ url_for('report') }}" class="btn btn-primary btn-lg">Report Missing Person</a>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-4">Recently Reported</h2>
+<div class="row">
+    {% for person in recent_persons %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <img src="{{ url_for('static', filename='uploads/' + person.image) if person.image else url_for('static', filename='default.jpg') }}" class="card-img-top" alt="{{ person.name }}" style="height: 200px; object-fit: cover;">
+
+            <div class="card-body">
+                <h5 class="card-title">{{ person.name }}</h5>
+                <p class="card-text">
+                    <strong>Age:</strong> {{ person.age }}<br>
+                    <strong>Missing Since:</strong>
+{% if person.date_missing %}
+    {{ person.date_missing.strftime('%b %d, %Y') }}
+{% else %}
+    Not Available
+{% endif %}
+
+                    <strong>Last Seen:</strong> {{ person.last_seen }}
+                </p>
+            </div>
+            <div class="card-footer bg-white">
+                <a href="{{ url_for('person_detail', id=person.id) }}" class="btn btn-outline-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

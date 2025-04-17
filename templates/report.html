@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Report Missing Person{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Report Missing Person</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <div class="col-12">
+                    <label for="last_seen" class="form-label">Last Seen Location</label>
+                    <input type="text" class="form-control" id="last_seen" name="last_seen" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="date" class="form-label">Date Last Seen</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="photo" class="form-label">Photo</label>
+                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                </div>
+                <div class="col-12">
+                    <label for="description" class="form-label">Physical Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="col-12">
+                    <label for="contact" class="form-label">Your Contact Information</label>
+                    <input type="text" class="form-control" id="contact" name="contact" required>
+                    <div class="form-text">This will be displayed publicly for people to contact with information.</div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
